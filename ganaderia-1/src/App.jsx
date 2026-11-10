@@ -4,6 +4,13 @@ import './App.css'
 
 const STORAGE_KEY = 'ganaderia-vacas'
 
+
+function getToday() {
+  const today = new Date()
+  const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+  return localDate.toISOString().slice(0, 10)
+}
+
 function readStoredCows() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
@@ -26,6 +33,8 @@ function readStoredCows() {
 function App() {
   const [vacasList, setVacasList] = useState(readStoredCows)
   const [newVaca, setNewVaca] = useState('')
+  const [newRaza, setNewRaza] = useState('')
+  const [newPurchaseDate, setNewPurchaseDate] = useState(getToday)
   const [isOnline, setIsOnline] = useState(navigator.onLine)
   const [installPrompt, setInstallPrompt] = useState(null)
   const [notice, setNotice] = useState('')
@@ -130,8 +139,8 @@ function App() {
     const cow = {
       id: crypto.randomUUID(),
       name,
-      raza: 'Holstein',
-      date_purchase: '2022-02-11',
+      raza: newRaza.trim(),
+      date_purchase: newPurchaseDate,
     }
 
     if (!isOnline || !supabase) {
@@ -140,6 +149,8 @@ function App() {
         { ...cow, syncStatus: 'pending' },
       ])
       setNewVaca('')
+      setNewRaza('')
+      setNewPurchaseDate(getToday())
       setNotice(
         !isOnline
           ? 'Vaca guardada en este dispositivo. Se sincronizará al recuperar la conexión.'
@@ -167,6 +178,8 @@ function App() {
       { ...data, syncStatus: 'synced' },
     ])
     setNewVaca('')
+    setNewRaza('')
+    setNewPurchaseDate(getToday())
     setNotice('Vaca agregada correctamente.')
   }
 
@@ -238,7 +251,7 @@ function App() {
         <div className="section-heading">
           <div>
             <p className="eyebrow">TU GANADO</p>
-            <h2>Registro de vacas</h2>
+            <h2>Registro de vacas </h2>
           </div>
           <div className="herd-count">
             <span className="count-number">{vacasList.length}</span>
@@ -247,29 +260,62 @@ function App() {
         </div>
 
         <form className="add-form" onSubmit={addVaca}>
-          <label htmlFor="cow-name">Añadir al registro</label>
           <div className="form-controls">
-            <div className="input-wrap">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 10 3 6l5 2m8 0 5-2-1 4m-14 0c0-2 3-4 6-4s6 2 6 4v7c0 2-3 4-6 4s-6-2-6-4v-7Z" />
-                <path d="M9 13h.1m6-.1h.1M10 17c1 1 3 1 4 0" />
-              </svg>
-              <input
-                id="cow-name"
-                type="text"
-                placeholder="Ej. Luna"
-                value={newVaca}
-                onChange={(event) => setNewVaca(event.target.value)}
-                maxLength={80}
-                required
-              />
+            <div className="field-group">
+              <label htmlFor="cow-name">Nombre</label>
+              <div className="input-wrap">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 10 3 6l5 2m8 0 5-2-1 4m-14 0c0-2 3-4 6-4s6 2 6 4v7c0 2-3 4-6 4s-6-2-6-4v-7Z" />
+                  <path d="M9 13h.1m6-.1h.1M10 17c1 1 3 1 4 0" />
+                </svg>
+                <input
+                  id="cow-name"
+                  type="text"
+                  placeholder="Nombre de la vaca"
+                  value={newVaca}
+                  onChange={(event) => setNewVaca(event.target.value)}
+                  maxLength={80}
+                  required
+                />
+              </div>
             </div>
-            <button className="add-button" type="submit" disabled={!newVaca.trim()}>
-              <span aria-hidden="true">+</span>
-              Agregar vaca
-            </button>
+            <div className="field-group">
+              <label htmlFor="cow-breed">Raza</label>
+              <div className="input-wrap">
+                <input
+                  id="cow-breed"
+                  type="text"
+                  placeholder="raza de la vaca"
+                  value={newRaza}
+                  onChange={(event) => setNewRaza(event.target.value)}
+                  maxLength={80}
+                  required
+                />
+              </div>
+            </div>
+            <div className="field-group">
+              <label htmlFor="cow-purchase-date">Fecha de compra</label>
+              <div className="input-wrap">
+                <input
+                  id="cow-purchase-date"
+                  type="date"
+                  value={newPurchaseDate}
+                  onChange={(event) => setNewPurchaseDate(event.target.value)}
+                  required
+                />
+              </div>
+            </div>
+            <div className="form-submit">
+              <button
+                className="add-button"
+                type="submit"
+                disabled={!newVaca.trim() || !newRaza.trim()}
+              >
+                <span aria-hidden="true">+</span>
+                Agregar vaca
+              </button>
+            </div>
           </div>
-          <p className="form-hint">Raza Holstein · Compra 11 feb 2022</p>
         </form>
 
         {notice && (
@@ -322,9 +368,10 @@ function App() {
                   <span className="cow-name">{vaca.name}</span>
                   <span className="cow-meta">
                     {vaca.raza || 'Holstein'} <span>·</span> Compra{' '}
-                    {vaca.date_purchase === '2022-02-11'
-                      ? '11 feb 2022'
-                      : vaca.date_purchase}
+                    {new Date(`${vaca.date_purchase}T00:00:00`).toLocaleDateString(
+                      'es',
+                      { day: 'numeric', month: 'short', year: 'numeric' },
+                    )}
                   </span>
                 </span>
                 <span

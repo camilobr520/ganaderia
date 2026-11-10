@@ -267,8 +267,22 @@
 }
 
 .form-controls {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(150px, 1.2fr) minmax(120px, 1fr) minmax(160px, 1fr) auto;
+  align-items: end;
   gap: 10px;
+}
+
+.field-group {
+  min-width: 0;
+}
+
+.field-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 650;
 }
 
 .input-wrap {
@@ -316,6 +330,7 @@
 
 .add-button {
   min-width: 152px;
+  min-height: 46px;
   padding: 0 15px;
 }
 
@@ -586,6 +601,18 @@
   .workspace {
     padding: 31px 0 40px;
   }
+
+  .form-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form-submit {
+    grid-column: 1 / -1;
+  }
+
+  .form-submit .add-button {
+    width: 100%;
+  }
 }
 
 @media (max-width: 430px) {
@@ -604,11 +631,11 @@
   }
 
   .form-controls {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
-  .add-button {
-    min-height: 45px;
+  .form-submit {
+    grid-column: auto;
   }
 
   .add-form {
