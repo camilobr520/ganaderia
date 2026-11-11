@@ -24,6 +24,12 @@ La tabla `Vaca` debe aceptar las columnas `name`, `raza` y `date_purchase`.
 Si las credenciales no están configuradas, las altas se guardan localmente y
 quedan pendientes hasta que Supabase esté disponible.
 
+Cada vaca sincronizada permite consultar y editar su seguimiento en la tabla
+`Seguimiento`. El formulario admite campos parciales; los campos que se dejen
+vacíos se guardan como `NULL`. Para los selects se usan los valores definidos
+en `src/seguimiento-enums.js`. La app carga y actualiza el registro de
+seguimiento más reciente para cada vaca.
+
 ## PWA
 
 La aplicación se puede instalar desde un navegador compatible y guarda su
