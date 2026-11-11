@@ -4,7 +4,7 @@
 }
 
 .topbar {
-  height: 82px;
+  height: 68px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,29 +14,32 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--ink);
-  font-size: 19px;
-  font-weight: 750;
-  letter-spacing: -0.8px;
-  text-decoration: none;
+  cursor: pointer;
+}
+
+.brand-name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.45px;
 }
 
 .brand-mark {
   display: grid;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   place-items: center;
-  border-radius: 12px;
-  background: var(--green);
-}
-
-.brand-mark svg {
-  width: 30px;
-  stroke: #fff;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.8;
+  border: 1px solid #dfe7d9;
+  border-radius: 10px;
+  background: #f3f6f0;
+  color: var(--green-dark);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
 .brand-accent {
@@ -96,22 +99,24 @@
 }
 
 .intro {
-  min-height: 328px;
-  display: grid;
-  grid-template-columns: 1fr 0.9fr;
-  align-items: center;
-  gap: 48px;
-  padding: 36px 0 30px;
+  padding: 18px 0;
   border-bottom: 1px solid var(--line);
 }
 
+.intro-layout {
+  min-height: 190px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+  align-items: center;
+  gap: 30px;
+}
+
 .intro-copy {
-  max-width: 520px;
-  padding-bottom: 8px;
+  max-width: 590px;
 }
 
 .eyebrow {
-  margin: 0 0 12px;
+  margin: 0 0 9px;
   color: var(--green);
   font-size: 11px;
   font-weight: 750;
@@ -119,102 +124,320 @@
 }
 
 .intro h1 {
-  max-width: 500px;
+  max-width: 560px;
   margin: 0;
   color: var(--ink);
-  font-size: clamp(36px, 4.2vw, 52px);
-  font-weight: 650;
-  letter-spacing: -2.7px;
+  font-size: clamp(34px, 4vw, 46px);
+  font-weight: 700;
+  letter-spacing: -2px;
   line-height: 1.08;
 }
 
 .intro-description {
-  margin: 17px 0 0;
+  margin: 11px 0 0;
   color: var(--muted);
   font-size: 15px;
 }
 
-.cow-illustration {
+.cow-art {
   position: relative;
-  width: min(100%, 410px);
-  height: 260px;
+  width: min(100%, 390px);
+  height: 190px;
   justify-self: end;
-  overflow: hidden;
-  border-radius: 22px;
-  background: #f0f3e8;
 }
 
-.cow-illustration > svg {
+.cow-art-disc {
   position: absolute;
-  right: 12px;
-  bottom: 14px;
-  width: 82%;
-  height: auto;
-}
-
-.sun {
-  position: absolute;
-  top: 31px;
-  right: 49px;
-  width: 52px;
-  height: 52px;
+  top: 7px;
+  right: 28px;
+  width: 176px;
+  height: 176px;
+  border: 1px solid #e6ecdf;
   border-radius: 50%;
-  background: #f4d893;
+  background: #f5f7f1;
 }
 
-.hill-back {
-  fill: #d6e2c6;
+.cow-art svg {
+  position: absolute;
+  top: 7px;
+  right: 28px;
+  z-index: 1;
+  width: 176px;
+  height: 176px;
+  overflow: hidden;
+  border-radius: 50%;
 }
 
-.hill-front,
-.grass {
-  fill: #b7cb9e;
-  stroke: #8ca773;
+.cow-ground {
+  stroke: #8eaa76;
+  stroke-linecap: round;
+  stroke-width: 2.5;
+}
+
+.field-hill-back {
+  fill: #dce8d1;
+}
+
+.field-hill-front {
+  fill: #b8cf9f;
+}
+
+.field-grass {
+  stroke: #77975f;
   stroke-linecap: round;
   stroke-linejoin: round;
+  stroke-width: 2.5;
+}
+
+.cow-body {
+  fill: #f7f6ef;
+  stroke: #526d48;
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: cow-breathe 3.8s ease-in-out infinite;
+}
+
+.cow-spot,
+.cow-face-spot {
+  fill: #526d48;
+}
+
+.cow-udder {
+  fill: #d3b9a2;
+  stroke: #8d7462;
+  stroke-width: 1.5;
+}
+
+.cow-neck {
+  fill: #f7f6ef;
+  stroke: #526d48;
   stroke-width: 2;
 }
 
-.cow-body,
-.cow-head,
-.cow-muzzle {
-  fill: #fbfaf5;
-  stroke: #354638;
+.cow-tail {
+  stroke: #526d48;
+  stroke-linecap: round;
+  stroke-width: 5;
+  transform-box: fill-box;
+  transform-origin: 0 0;
+  animation: cow-tail-swish 2.8s ease-in-out infinite;
+}
+
+.cow-head {
+  transform-box: fill-box;
+  transform-origin: 18% 82%;
+  animation: cow-head-motion 4.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.cow-ear {
+  fill: #f7f6ef;
+  stroke: #354a30;
+  stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 3;
 }
 
-.cow-patch {
-  fill: #647d5a;
-}
-
-.cow-ear,
-.cow-leg {
-  stroke: #354638;
-  stroke-linecap: round;
+.cow-face {
+  fill: #f7f6ef;
+  stroke: #354a30;
   stroke-linejoin: round;
-  stroke-width: 5;
+  stroke-width: 3;
 }
 
 .cow-eye {
-  stroke: #354638;
+  stroke: #283727;
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+
+.cow-muzzle {
+  fill: #d3b9a2;
+  stroke: #354a30;
+  stroke-width: 2;
+}
+
+.cow-nostril {
+  stroke: #624f43;
   stroke-linecap: round;
   stroke-width: 5;
 }
 
-.illustration-caption {
-  position: absolute;
-  bottom: 16px;
-  left: 18px;
-  color: #61745b;
-  font-size: 10px;
-  font-weight: 600;
+.cow-leg {
+  stroke: #354a30;
+  stroke-linecap: round;
+  stroke-width: 8;
+}
+
+.cow-far-leg {
+  stroke: #40583a;
+  stroke-linecap: round;
+  stroke-width: 6;
+}
+
+.cow-hoof {
+  stroke: #283727;
+  stroke-linecap: round;
+  stroke-width: 7;
+}
+
+.cow-front-leg {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: cow-step 4.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes cow-breathe {
+  0%,
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+  50% {
+    transform: translateY(-1px) scaleY(1.015);
+  }
+}
+
+@keyframes cow-head-motion {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  25% {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+  42% {
+    transform: translateY(1px) rotate(2deg);
+  }
+  58% {
+    transform: translateY(-1px) rotate(-1.5deg);
+  }
+  74% {
+    transform: translateY(0) rotate(0.5deg);
+  }
+}
+
+@keyframes cow-step {
+  0%,
+  20%,
+  100% {
+    transform: rotate(0);
+  }
+  37% {
+    transform: rotate(20deg);
+  }
+  48% {
+    transform: rotate(24deg);
+  }
+  61% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes cow-tail-swish {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-20deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cow-body,
+  .cow-front-leg,
+  .cow-head,
+  .cow-tail {
+    animation: none;
+  }
 }
 
 .workspace {
   max-width: 780px;
   margin: 0 auto;
-  padding: 38px 0 56px;
+  padding: 30px 0 112px;
+}
+
+.workspace-register {
+  max-width: 680px;
+  padding-top: 24px;
+  padding-bottom: 42px;
+}
+
+.registration-nav {
+  margin-bottom: 28px;
+}
+
+.registration-heading {
+  margin-bottom: 22px;
+}
+
+.registration-heading .eyebrow {
+  margin-bottom: 7px;
+}
+
+.registration-heading h1 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(28px, 4vw, 34px);
+  font-weight: 680;
+  letter-spacing: -1.2px;
+}
+
+.registration-heading p:last-child {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.registration-cancel {
+  display: block;
+  margin: 15px 0 0 auto;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.registration-cancel:hover {
+  color: var(--green-dark);
+}
+
+.floating-register-button {
+  position: fixed;
+  z-index: 5;
+  right: max(20px, calc((100vw - 1120px) / 2));
+  bottom: 22px;
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--green-dark);
+  box-shadow: 0 8px 24px rgb(34 49 32 / 22%);
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.floating-register-button:hover {
+  transform: translateY(-2px);
+  background: #35572e;
+}
+
+.floating-register-button span {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
 }
 
 .section-heading {
@@ -934,8 +1157,8 @@
     height: 68px;
   }
 
-  .brand {
-    font-size: 17px;
+  .brand-name {
+    font-size: 15px;
   }
 
   .brand-mark {
@@ -958,44 +1181,56 @@
   }
 
   .intro {
-    min-height: auto;
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 38px 0 28px;
+    padding: 14px 0;
+  }
+
+  .intro-layout {
+    min-height: 164px;
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 38%);
+    gap: 10px;
   }
 
   .intro h1 {
-    max-width: 430px;
-    font-size: clamp(37px, 10vw, 48px);
-    letter-spacing: -2px;
+    font-size: clamp(28px, 7vw, 36px);
+    letter-spacing: -1.5px;
   }
 
   .intro-description {
-    margin-top: 12px;
-    font-size: 14px;
+    font-size: 13px;
+    line-height: 1.45;
   }
 
-  .cow-illustration {
+  .cow-art {
     width: 100%;
-    height: 205px;
-    justify-self: stretch;
+    height: 150px;
   }
 
-  .cow-illustration > svg {
-    right: 4px;
-    bottom: 4px;
-    width: 75%;
+  .cow-art-disc {
+    top: 10px;
+    right: 0;
+    width: 128px;
+    height: 128px;
   }
 
-  .sun {
-    top: 23px;
-    right: 35px;
-    width: 42px;
-    height: 42px;
+  .cow-art svg {
+    top: 10px;
+    right: 0;
+    width: 128px;
+    height: 128px;
   }
 
   .workspace {
-    padding: 31px 0 40px;
+    padding: 26px 0 104px;
+  }
+
+  .workspace-register {
+    padding-top: 22px;
+    padding-bottom: 36px;
+  }
+
+  .floating-register-button {
+    right: 18px;
+    bottom: 18px;
   }
 
   .app-shell-detail {
@@ -1034,6 +1269,38 @@
 
   .connection {
     font-size: 0;
+  }
+
+  .intro-layout {
+    grid-template-columns: minmax(0, 1fr) 112px;
+    gap: 4px;
+  }
+
+  .intro .eyebrow {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .intro h1 {
+    font-size: clamp(26px, 7.4vw, 31px);
+    letter-spacing: -1.2px;
+  }
+
+  .cow-art {
+    height: 132px;
+    margin-right: -6px;
+  }
+
+  .cow-art-disc {
+    top: 13px;
+    width: 108px;
+    height: 108px;
+  }
+
+  .cow-art svg {
+    top: 13px;
+    width: 108px;
+    height: 108px;
   }
 
   .connection-dot {

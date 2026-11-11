@@ -84,6 +84,7 @@ function App() {
   const [newVaca, setNewVaca] = useState('')
   const [newRaza, setNewRaza] = useState('')
   const [newPurchaseDate, setNewPurchaseDate] = useState('')
+  const [currentScreen, setCurrentScreen] = useState('home')
   const [isOnline, setIsOnline] = useState(navigator.onLine)
   const [loadingCows, setLoadingCows] = useState(
     () => navigator.onLine && Boolean(supabase),
@@ -293,6 +294,7 @@ function App() {
       setNewVaca('')
       setNewRaza('')
       setNewPurchaseDate('')
+      setCurrentScreen('home')
       setNotice(
         !isOnline
           ? 'Vaca guardada en este dispositivo. Se sincronizará al recuperar la conexión.'
@@ -322,6 +324,7 @@ function App() {
     setNewVaca('')
     setNewRaza('')
     setNewPurchaseDate('')
+    setCurrentScreen('home')
     setNotice('Vaca agregada correctamente.')
   }
 
@@ -541,16 +544,17 @@ function App() {
       {!activeCow && (
         <>
       <header className="topbar">
-        <a className="brand" href="/" aria-label="Ganadería, inicio">
+        <button
+          className="brand"
+          type="button"
+          onClick={() => setCurrentScreen('home')}
+          aria-label="Hato don Nelson Company, inicio"
+        >
           <span className="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none">
-              <path d="M8 16 5 10l9 3m18 3 3-6-9 3" />
-              <path d="M10 15c0-3 4-5 10-5s10 2 10 5v11c0 5-4 8-10 8s-10-3-10-8V15Z" />
-              <path d="M14 21h.1M26 21h.1M16 28c2 2 6 2 8 0" />
-            </svg>
+            <span>HN</span>
           </span>
-          <span>campo<span className="brand-accent">vivo</span></span>
-        </a>
+          <span className="brand-name">Hato Nelson Company</span>
+        </button>
         <div className="topbar-actions">
           <span className={`connection ${isOnline ? 'is-online' : 'is-offline'}`}>
             <span className="connection-dot" />
@@ -564,45 +568,86 @@ function App() {
         </div>
       </header>
 
-      <section className="intro">
-        <div className="intro-copy">
-          <p className="eyebrow">TU CAMPO, EN ORDEN</p>
-          <h1>Un mejor cuidado empieza por conocerlas.</h1>
-          <p className="intro-description">
-            Lleva un registro simple de tu ganado, estés donde estés.
-          </p>
-        </div>
-        <div className="cow-illustration" aria-hidden="true">
-          <span className="sun" />
-          <svg viewBox="0 0 260 190" fill="none">
-            <path className="hill hill-back" d="M0 145c47-38 91-25 128-7 45 21 79 4 132-30v82H0v-45Z" />
-            <path className="hill hill-front" d="M0 157c39-20 76-13 120 2 48 16 87-8 140-27v58H0v-33Z" />
-            <path className="cow-body" d="M54 82c0-21 17-38 38-38h70c19 0 34 15 34 34v44c0 13-10 23-23 23H83c-16 0-29-13-29-29V82Z" />
-            <path className="cow-patch" d="M104 48c18-7 31 1 36 13 5 13-3 23-16 27-16 5-31-3-31-17 0-10 3-18 11-23Z" />
-            <path className="cow-head" d="M171 59c13-7 32-1 39 12l9 18c5 11 0 24-11 29l-18 8-30-13 1-42 10-12Z" />
-            <path className="cow-ear" d="m174 62-22-12c-5-3-11 2-8 7l13 20m55-4 14-17c4-5 11-2 10 4l-6 23" />
-            <path className="cow-muzzle" d="M192 101c9-7 24-3 28 6 4 10-6 17-18 17-10 0-18-5-17-12 0-4 3-8 7-11Z" />
-            <path className="cow-eye" d="M193 86h.1" />
-            <path className="cow-leg" d="M79 137v31m22-29v29m70-29v29m20-36v36" />
-            <path className="grass" d="m26 166 7-14 3 14 8-10 1 10m176-1 7-17 3 17 9-12 1 12" />
-          </svg>
-          <span className="illustration-caption">Cuidar bien también es llevar la cuenta.</span>
-        </div>
-      </section>
+      {currentScreen === 'home' && (
+        <section className="intro">
+          <div className="intro-layout">
+            <div className="intro-copy">
+              <p className="eyebrow">HATO DON NELSON COMPANY</p>
+              <h1>Fuerza para crecer.</h1>
+              <p className="intro-description">
+                El control de tu ganado, en un solo lugar.
+              </p>
+            </div>
+            <div className="cow-art" aria-hidden="true">
+              <span className="cow-art-disc" />
+              <svg viewBox="15 15 320 320" fill="none">
+                <path className="field-hill-back" d="M19 207c35-30 72-35 111-15 32 16 54 18 86 0 42-23 81-20 126 7v38H19v-30Z" />
+                <path className="field-hill-front" d="M19 214c47-21 81-12 117 2 38 15 71 8 103-5 37-15 70-12 103 1v25H19v-23Z" />
+                <path className="cow-ground" d="M37 213c53-13 100-11 143-2 47 10 92 10 143-4" />
+                <path className="cow-tail" d="M91 125c-25-8-38 2-41 20" />
+                <path className="cow-far-leg" d="M123 157v51m101-52v52" />
+                <path className="cow-body" d="M83 131c8-26 31-39 62-39h64c34 0 56 18 61 48l-5 29H91l-8-38Z" />
+                <path className="cow-spot" d="M126 99c17-10 35-8 42 3 6 10-1 22-12 29-13 8-28 5-34-4-6-8-5-21 4-28Zm74 5c12-6 28-1 32 9 4 9-3 16-14 19l-16-2-9-13 7-13Z" />
+                <path className="cow-udder" d="M158 164c2-10 12-15 24-13 12 1 19 8 18 17l-3 10h-37l-3-14Z" />
+                <path className="cow-neck" d="M224 113c6-18 17-28 34-28 17 0 28 11 31 28l7 42-20 18-51-8-12-26 11-26Z" />
+                <g className="cow-head">
+                  <path className="cow-ear" d="m251 96-20-9c-8-4-13 2-7 9l18 13" />
+                  <path className="cow-ear" d="m279 94 13-14c6-6 13-2 9 5l-12 20" />
+                  <path className="cow-face" d="M251 101c5-17 17-25 31-22 14 3 21 15 23 29l3 27c1 13-9 24-22 27l-18 3c-15 2-28-9-29-24l-1-22 13-18Z" />
+                  <path className="cow-face-spot" d="M268 85c9-6 19-2 23 5l-8 13-18-3-5-7 8-8Z" />
+                  <path className="cow-eye" d="m286 116 2-.2" />
+                  <path className="cow-muzzle" d="M296 137c8-4 15 1 15 7s-7 10-16 10l-10-1c-7-1-10-5-7-9 2-4 9-5 18-7Z" />
+                  <path className="cow-nostril" d="m298 143 1-.2" />
+                </g>
+                <g className="cow-front-leg">
+                  <path className="cow-leg" d="M239 162v47" />
+                  <path className="cow-hoof" d="M234 211h11" />
+                </g>
+                <path className="cow-leg" d="M151 164v45m88-45v45" />
+                <path className="cow-hoof" d="M146 211h11m83 0h11" />
+                <path className="field-grass" d="m70 218 4-9 3 9m25 1 5-11 3 11m165-2 4-9 4 9m20 1 5-11 3 11" />
+              </svg>
+            </div>
+          </div>
+        </section>
+      )}
 
-      <section className="workspace" aria-label="Registro de vacas">
-        <div className="section-heading">
+      <section
+        className={`workspace ${currentScreen === 'register' ? 'workspace-register' : ''}`}
+        aria-label={currentScreen === 'home' ? 'Animales registrados' : 'Registro de ganado'}
+      >
+        {currentScreen === 'home' && <div className="section-heading">
           <div>
-            <p className="eyebrow">TU GANADO</p>
-            <h2>Registro de vacas 1.1 </h2>
+            <p className="eyebrow">RESUMEN DEL HATO</p>
+            <h2>Tu ganado</h2>
           </div>
           <div className="herd-count">
             <span className="count-number">{vacasList.length}</span>
             <span>{vacasList.length === 1 ? 'animal' : 'animales'}</span>
           </div>
-        </div>
+        </div>}
 
-        <form className="add-form" onSubmit={addVaca}>
+        {currentScreen === 'register' && (
+          <>
+            <nav className="registration-nav" aria-label="Navegación">
+              <button
+                className="detail-back-button"
+                type="button"
+                onClick={() => setCurrentScreen('home')}
+              >
+                <span aria-hidden="true">←</span>
+                Volver a animales
+              </button>
+            </nav>
+            <div className="registration-heading">
+              <p className="eyebrow">NUEVO REGISTRO</p>
+              <h1>Registrar ganado</h1>
+              <p>Completa los datos básicos del animal.</p>
+            </div>
+          </>
+        )}
+
+        {currentScreen === 'register' && <form className="add-form" onSubmit={addVaca}>
           <div className="form-controls">
             <div className="field-group">
               <label htmlFor="cow-name">Nombre</label>
@@ -656,13 +701,13 @@ function App() {
                 disabled={loadingCows || !newVaca.trim() || !newRaza.trim()}
               >
                 <span aria-hidden="true">+</span>
-                Agregar vaca
+                Registrar ganado
               </button>
             </div>
           </div>
-        </form>
+        </form>}
 
-        {notice && (
+        {currentScreen === 'home' && notice && (
           <p className="notice" role="status">
             {notice}
             <button
@@ -676,16 +721,16 @@ function App() {
           </p>
         )}
 
-        <div className="list-heading">
+        {currentScreen === 'home' && <div className="list-heading">
           <h3>Animales registrados</h3>
           {pendingCount > 0 && (
             <span className="pending-summary">
               {pendingCount} pendiente{pendingCount === 1 ? '' : 's'} de sincronizar
             </span>
           )}
-        </div>
+        </div>}
 
-        {loadingCows ? (
+        {currentScreen === 'home' && (loadingCows ? (
           <div className="empty-state" role="status">
             <span className="loading-spinner" />
             <h4>Consultando el registro</h4>
@@ -700,8 +745,8 @@ function App() {
                 <path d="M19 24h.1m10-.1h.1m-9 7c2 2 6 2 8 0" />
               </svg>
             </span>
-            <h4>Aún no hay vacas en tu registro</h4>
-            <p>Agrega la primera y empieza a organizar tu ganado.</p>
+            <h4>Aún no hay animales registrados</h4>
+            <p>Registra el primero para empezar a organizar tu ganado.</p>
           </div>
         ) : (
           <ul className="cow-list">
@@ -800,11 +845,44 @@ function App() {
               </li>
             ))}
           </ul>
+        ))}
+        {currentScreen === 'register' && notice && (
+          <p className="notice" role="status">
+            {notice}
+            <button
+              className="dismiss-notice"
+              type="button"
+              aria-label="Cerrar aviso"
+              onClick={() => setNotice('')}
+            >
+              ×
+            </button>
+          </p>
+        )}
+        {currentScreen === 'register' && (
+          <button
+            className="registration-cancel"
+            type="button"
+            onClick={() => setCurrentScreen('home')}
+          >
+            Cancelar y volver
+          </button>
         )}
       </section>
 
+      {currentScreen === 'home' && (
+        <button
+          className="floating-register-button"
+          type="button"
+          onClick={() => setCurrentScreen('register')}
+        >
+          <span aria-hidden="true">+</span>
+          Registrar ganado
+        </button>
+      )}
+
       <footer className="footer">
-        <span>Hecho para cuidar mejor.</span>
+        <span>Hato don Nelson Company</span>
         <span className="footer-sync">
           {pendingCount > 0
             ? `${pendingCount} cambio${pendingCount === 1 ? '' : 's'} por sincronizar`
@@ -828,7 +906,7 @@ function App() {
               Volver al registro
             </button>
             <span className="detail-screen-brand">
-              campo<span className="brand-accent">vivo</span>
+              Hato don Nelson Company
             </span>
           </header>
 

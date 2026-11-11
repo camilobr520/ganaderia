@@ -1,8 +1,10 @@
-# Campo Vivo
+# Hato don Nelson Company
 
-PWA para registrar vacas en Supabase. Conserva los registros en este dispositivo
-y pone en cola las altas hechas sin conexión para sincronizarlas cuando vuelva
-la conexión.
+PWA para registrar y consultar el ganado en Supabase. La pantalla de inicio
+muestra los animales registrados y permite abrir su seguimiento; el formulario
+para registrar ganado está en una pantalla independiente. Conserva los registros
+en este dispositivo y pone en cola las altas hechas sin conexión para
+sincronizarlas cuando vuelva la conexión.
 
 ## Desarrollo
 

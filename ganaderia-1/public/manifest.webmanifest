@@ -1,15 +1,15 @@
 {
   "id": "/",
-  "name": "Campo Vivo - Registro de ganado",
-  "short_name": "Campo Vivo",
-  "description": "Lleva un registro simple de tu ganado, estés donde estés.",
+  "name": "Hato don Nelson Company - Registro de ganado",
+  "short_name": "Hato don Nelson",
+  "description": "Registro y seguimiento del ganado de Hato don Nelson Company.",
   "lang": "es",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#ffffff",
-  "theme_color": "#527747",
+  "theme_color": "#3f6336",
   "icons": [
     {
       "src": "/pwa-icon.svg",

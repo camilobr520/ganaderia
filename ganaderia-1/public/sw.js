@@ -1,4 +1,4 @@
-const CACHE_NAME = 'campo-vivo-v1'
+const CACHE_NAME = 'hato-don-nelson-v1'
 const APP_SHELL = [
   '/',
   '/manifest.webmanifest',
